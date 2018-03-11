@@ -18,10 +18,10 @@ export default class SocketIO {
             SocketIO.io = _io;
             const io = SocketIO.io;
             io.on("connection", (socket: any) => {
-                io.emit("chat", "Server Respond Hello");
                 socket.on("chat", (msg: any) => {
-                    console.log("msg: ", msg);
-                    io.emit("chat", msg);
+                    const time = Date.now().toString();
+                    console.log("msg: ", time);
+                    io.emit("chat", time);
                 });
                 console.log("connected");
             });
