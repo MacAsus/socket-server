@@ -41,7 +41,7 @@ mongoose.connect(mongoUrl, {useMongoClient: true}).then(
 });
 
 // Express configuration
-app.set("port", process.env.PORT || 3000);
+app.set("port", process.env.PORT || 8081);
 app.set("views", path.join(__dirname, "../views"));
 app.set("view engine", "pug");
 app.use(compression());
@@ -83,29 +83,41 @@ app.use((req, res, next) => {
 });
 
 app.use(
-  express.static(path.join(__dirname, "public"), { maxAge: 31557600000 })
+  // express.static(path.join(__dirname, "public"), { maxAge: 31557600000 })
+  express.static(path.join(__dirname, "public"))
 );
+
+/**
+ * Custom HTML Serving
+ */
+
+app.use("/css", express.static(__dirname + "/css"));
+app.use("/js", express.static(__dirname + "/js"));
+app.use("/assets", express.static(__dirname + "/assets"));
+app.get("/", function(req, res) {
+    res.sendFile(__dirname + "/index.html");
+});
 
 /**
  * Primary app routes.
  */
-app.get("/", homeController.index);
-app.get("/login", userController.getLogin);
-app.post("/login", userController.postLogin);
-app.get("/logout", userController.logout);
-app.get("/forgot", userController.getForgot);
-app.post("/forgot", userController.postForgot);
-app.get("/reset/:token", userController.getReset);
-app.post("/reset/:token", userController.postReset);
-app.get("/signup", userController.getSignup);
-app.post("/signup", userController.postSignup);
-app.get("/contact", contactController.getContact);
-app.post("/contact", contactController.postContact);
-app.get("/account", passportConfig.isAuthenticated, userController.getAccount);
-app.post("/account/profile", passportConfig.isAuthenticated, userController.postUpdateProfile);
-app.post("/account/password", passportConfig.isAuthenticated, userController.postUpdatePassword);
-app.post("/account/delete", passportConfig.isAuthenticated, userController.postDeleteAccount);
-app.get("/account/unlink/:provider", passportConfig.isAuthenticated, userController.getOauthUnlink);
+// app.get("/", homeController.index);
+// app.get("/login", userController.getLogin);
+// app.post("/login", userController.postLogin);
+// app.get("/logout", userController.logout);
+// app.get("/forgot", userController.getForgot);
+// app.post("/forgot", userController.postForgot);
+// app.get("/reset/:token", userController.getReset);
+// app.post("/reset/:token", userController.postReset);
+// app.get("/signup", userController.getSignup);
+// app.post("/signup", userController.postSignup);
+// app.get("/contact", contactController.getContact);
+// app.post("/contact", contactController.postContact);
+// app.get("/account", passportConfig.isAuthenticated, userController.getAccount);
+// app.post("/account/profile", passportConfig.isAuthenticated, userController.postUpdateProfile);
+// app.post("/account/password", passportConfig.isAuthenticated, userController.postUpdatePassword);
+// app.post("/account/delete", passportConfig.isAuthenticated, userController.postDeleteAccount)"
+// app.get("/account/unlink/:provider", passportConfig.isAuthenticated, userController.getOauthUnlink);
 
 /**
  * API examples routes.

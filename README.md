@@ -30,7 +30,7 @@ mongod
 npm run build
 npm start
 ```
-Navigate to `http://localhost:3000`
+Navigate to `http://localhost:8081`
 
 # TypeScript + Node 
 The main purpose of this repository is to show a good end-to-end project setup and workflow for writing Node code in TypeScript.
