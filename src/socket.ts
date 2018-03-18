@@ -20,10 +20,10 @@ export default class SocketIO {
             SocketIO.io = _io;
             const io = SocketIO.io;
             io.on("connection", (socket: any) => {
+                console.log("Client Connected" + socket.id);
                 socket.on("chat", (msg: any) => {
-                    const time = Date.now().toString();
-                    console.log("msg: ", time);
-                    io.emit("chat", time);
+                    console.log("Server got msg", msg);
+                    io.emit("chat", msg);
                 });
                 socket.on("newPlayer", function() {
                     socket.player = {
