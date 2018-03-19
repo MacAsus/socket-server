@@ -58,7 +58,7 @@ export default class SocketIO {
         });
         socket.on("userPos", (_data: string) => {
           if (isChangedPos(socket, _data)) {
-            console.log("socket.player is", socket.player);
+            // console.log("socket.player is", socket.player);
             socket.to(socket.player.room).emit("userPos", socket.player); // emit without sender
           }
         });
@@ -103,6 +103,9 @@ function isChangedPos(socket: any, _data: any) {
     socket.player.y = data[2];
     isChanged = true;
   }
+
+  // if(isChangedPos)
+  // console.log("It changed");
 
   return isChanged;
 }
